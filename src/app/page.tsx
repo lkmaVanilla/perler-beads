@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, ChangeEvent, DragEvent, useEffect, useMemo, useCallback } from 'react';
 import Script from 'next/script';
-import InstallPWA from '../components/InstallPWA';
+import Link from 'next/link';
 
 // 导入像素化工具和类型
 import {
@@ -1806,9 +1806,6 @@ export default function Home() {
     {/* 添加自定义动画样式 */}
     <style dangerouslySetInnerHTML={{ __html: floatAnimation }} />
     
-    {/* PWA 安装按钮 */}
-    <InstallPWA />
-    
     {/* ++ 修改：添加 onLoad 回调函数 ++ */}
     <Script
       async
@@ -1854,9 +1851,37 @@ export default function Home() {
     />
 
     {/* Apply dark mode styles to the main container */}
-    <div className="min-h-screen p-4 sm:p-6 flex flex-col items-center bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 font-[family-name:var(--font-geist-sans)] overflow-x-hidden">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 font-[family-name:var(--font-geist-sans)] overflow-x-hidden">
+      {/* Top Navigation Bar with Logo */}
+      <nav className="w-full px-4 sm:px-6 mb-4 sm:mb-6 pt-4 sm:pt-6">
+        <div className="flex items-center gap-3">
+          {/* Logo - 16-bead icon */}
+          <div className="relative">
+            <div className="relative grid grid-cols-4 gap-1 p-2 bg-white/95 dark:bg-gray-800/95 rounded-xl shadow-md border-2 border-gradient-to-r from-pink-300 via-purple-300 to-blue-300 dark:border-gray-600">
+              {['bg-red-400', 'bg-blue-400', 'bg-yellow-400', 'bg-green-400',
+                'bg-purple-400', 'bg-pink-400', 'bg-orange-400', 'bg-teal-400',
+                'bg-indigo-400', 'bg-cyan-400', 'bg-lime-400', 'bg-amber-400',
+                'bg-rose-400', 'bg-sky-400', 'bg-emerald-400', 'bg-violet-400'].map((color, i) => (
+                <div key={i} className="relative">
+                  <div
+                    className={`w-3 h-3 rounded-full ${color} transition-all duration-500 shadow-md`}
+                  ></div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          {/* Brand Name */}
+          <Link href="/" className="flex items-center">
+            <h1 className="text-xl sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 dark:from-pink-400 dark:via-purple-400 dark:to-blue-400 hover:scale-105 transition-transform duration-300">
+              Perler Studio
+            </h1>
+          </Link>
+        </div>
+      </nav>
+
       {/* Apply dark mode styles to the header */}
-      <header className="w-full md:max-w-4xl text-center mt-6 mb-8 sm:mt-8 sm:mb-10 relative overflow-hidden">
+      <header className="w-full text-center mt-6 mb-8 sm:mt-8 sm:mb-10 relative overflow-hidden px-4 sm:px-6">
         {/* Adjust decorative background colors for dark mode */}
         <div className="absolute top-0 left-0 w-48 h-48 bg-blue-100 dark:bg-blue-900 rounded-full opacity-30 dark:opacity-20 blur-3xl"></div>
         <div className="absolute bottom-0 right-0 w-48 h-48 bg-pink-100 dark:bg-pink-900 rounded-full opacity-30 dark:opacity-20 blur-3xl"></div>
@@ -2004,12 +2029,12 @@ export default function Home() {
       </header>
 
       {/* Apply dark mode styles to the main section */}
-      <main ref={mainRef} className="w-full md:max-w-4xl flex flex-col items-center space-y-5 sm:space-y-6 relative overflow-hidden">
+      <main ref={mainRef} className="w-full flex flex-col items-center space-y-5 sm:space-y-6 relative overflow-hidden px-4 sm:px-6">
         {/* Apply dark mode styles to the Drop Zone */}
         <div
           onDrop={handleDrop} onDragOver={handleDragOver} onDragEnter={handleDragOver}
           onClick={isMounted ? triggerFileInput : undefined}
-          className={`border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 sm:p-8 text-center ${isMounted ? 'cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-gray-800' : 'cursor-wait'} transition-all duration-300 w-full md:max-w-md flex flex-col justify-center items-center shadow-sm hover:shadow-md`}
+          className={`border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 sm:p-8 text-center ${isMounted ? 'cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-gray-800' : 'cursor-wait'} transition-all duration-300 w-full max-w-md flex flex-col justify-center items-center shadow-sm hover:shadow-md`}
           style={{ minHeight: '130px' }}
         >
           {/* Icon color */}
@@ -2024,7 +2049,7 @@ export default function Home() {
 
         {/* Apply dark mode styles to the Tip Box */}
         {!originalImageSrc && (
-          <div className="w-full md:max-w-md bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-700 p-3 rounded-lg border border-blue-100 dark:border-gray-600 shadow-sm">
+          <div className="w-full max-w-md mx-auto bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-700 p-3 rounded-lg border border-blue-100 dark:border-gray-600 shadow-sm">
             {/* Icon color */}
             <p className="text-xs text-indigo-700 dark:text-indigo-300 flex items-start">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 flex-shrink-0 text-blue-500 dark:text-blue-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -2044,7 +2069,7 @@ export default function Home() {
             {/* ++ HIDE Control Row in manual mode ++ */}
             {!isManualColoringMode && (
               /* 修改控制面板网格布局 */
-              <div className="w-full md:max-w-2xl grid grid-cols-1 sm:grid-cols-2 gap-4 bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl shadow-md border border-gray-100 dark:border-gray-700">
+              <div className="w-full max-w-2xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl shadow-md border border-gray-100 dark:border-gray-700">
                 {/* Granularity Input */}
                 <div className="flex-1">
                   {/* Label color */}
@@ -2187,7 +2212,7 @@ export default function Home() {
             )}
 
             {/* Output Section */}
-            <div className="w-full md:max-w-2xl">
+            <div className="w-full max-w-2xl mx-auto">
               <canvas ref={originalCanvasRef} className="hidden"></canvas>
 
               {/* ++ 手动编辑模式提示信息 ++ */}
@@ -2249,7 +2274,7 @@ export default function Home() {
         {/* ++ HIDE Color Counts in manual mode ++ */}
         {!isManualColoringMode && originalImageSrc && colorCounts && Object.keys(colorCounts).length > 0 && (
           // Apply dark mode styles to color counts container
-          <div className="w-full md:max-w-2xl mt-6 bg-white dark:bg-gray-800 p-4 rounded-lg shadow border border-gray-100 dark:border-gray-700 color-stats-panel">
+          <div className="w-full max-w-2xl mx-auto mt-6 bg-white dark:bg-gray-800 p-4 rounded-lg shadow border border-gray-100 dark:border-gray-700 color-stats-panel">
             {/* Title color */}
             <h3 className="text-lg font-semibold mb-1 text-gray-700 dark:text-gray-200 text-center">
               Remove Colors
@@ -2376,7 +2401,7 @@ export default function Home() {
         {/* Message if palette becomes empty (Also hide in manual mode) */}
          {!isManualColoringMode && originalImageSrc && activeBeadPalette.length === 0 && excludedColorKeys.size > 0 && (
              // Apply dark mode styles to the warning box
-             <div className="w-full md:max-w-2xl mt-6 bg-yellow-100 dark:bg-yellow-900/50 p-4 rounded-lg shadow border border-yellow-200 dark:border-yellow-800/60 text-center text-sm text-yellow-800 dark:text-yellow-300">
+             <div className="w-full max-w-2xl mx-auto mt-6 bg-yellow-100 dark:bg-yellow-900/50 p-4 rounded-lg shadow border border-yellow-200 dark:border-yellow-800/60 text-center text-sm text-yellow-800 dark:text-yellow-300">
                  Available colors are too few or empty. Please check the excluded colors in the statistics list above and restore some, or change the palette.
                  {excludedColorKeys.size > 0 && (
                       // Apply dark mode styles to the inline "restore all" button
@@ -2401,7 +2426,7 @@ export default function Home() {
 
         {/* ++ RENDER Enter Manual Mode Button ONLY when NOT in manual mode (before downloads) ++ */}
         {!isManualColoringMode && originalImageSrc && mappedPixelData && gridDimensions && (
-            <div className="w-full md:max-w-2xl mt-4 space-y-3"> {/* Wrapper div */} 
+            <div className="w-full max-w-2xl mx-auto mt-4 space-y-3"> {/* Wrapper div */} 
              {/* Manual Edit Mode Button */}
              <button
                 onClick={() => {
@@ -2431,7 +2456,7 @@ export default function Home() {
 
         {/* ++ HIDE Download Buttons in manual mode ++ */}
         {!isManualColoringMode && originalImageSrc && mappedPixelData && (
-            <div className="w-full md:max-w-2xl mt-4">
+            <div className="w-full max-w-2xl mx-auto mt-4">
               {/* 使用一个大按钮，现在所有的下载设置都通过弹窗控制 */}
               <button
                 onClick={() => setIsDownloadSettingsOpen(true)}
@@ -2527,11 +2552,29 @@ export default function Home() {
       )}
 
       {/* Apply dark mode styles to the Footer */}
-      <footer className="w-full md:max-w-4xl mt-10 mb-6 py-6 text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800/50 rounded-lg shadow-inner">
+      <footer className="w-full mt-10 mb-6 py-6 text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800/50 px-4 sm:px-6">
         {/* Copyright text color */}
-        <p className="font-medium text-gray-600 dark:text-gray-300">
-          Perler Beads Generator &copy; {new Date().getFullYear()}
-        </p>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+          <p className="font-medium text-gray-600 dark:text-gray-300">
+          METACREATE PTE.LTD. &copy; {new Date().getFullYear()}
+          </p>
+          <span className="hidden sm:inline text-gray-400 dark:text-gray-500">|</span>
+          <div className="flex items-center gap-3">
+            <Link 
+              href="/terms"
+              className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline transition-colors"
+            >
+              Terms of Service
+            </Link>
+            <span className="text-gray-400 dark:text-gray-500">|</span>
+            <Link 
+              href="/terms#privacy"
+              className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline transition-colors"
+            >
+              Privacy Policy
+            </Link>
+          </div>
+        </div>
       </footer>
 
       {/* Donation Modal - Now using the new component */}

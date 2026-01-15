@@ -8,14 +8,11 @@ export default function PWADebug() {
     serviceWorker: object | null;
     https: boolean;
     standalone: boolean;
-    installable: boolean;
-    installPromptSupported?: boolean;
   }>({
     manifest: null,
     serviceWorker: null,
     https: false,
     standalone: false,
-    installable: false,
   });
 
   useEffect(() => {
@@ -25,8 +22,6 @@ export default function PWADebug() {
         serviceWorker?: object | null;
         https?: boolean;
         standalone?: boolean;
-        installable?: boolean;
-        installPromptSupported?: boolean;
       } = {};
 
       // 检查 HTTPS
@@ -65,16 +60,11 @@ export default function PWADebug() {
       // 检查是否独立模式
       info.standalone = window.matchMedia('(display-mode: standalone)').matches;
 
-      // 检查 beforeinstallprompt
-      info.installPromptSupported = 'onbeforeinstallprompt' in window;
-
       setDebugInfo({
         manifest: info.manifest || null,
         serviceWorker: info.serviceWorker || null,
         https: info.https || false,
         standalone: info.standalone || false,
-        installable: info.installable || false,
-        installPromptSupported: info.installPromptSupported,
       });
     };
 
@@ -102,37 +92,14 @@ export default function PWADebug() {
                 <span className={`w-4 h-4 rounded-full ${debugInfo.standalone ? 'bg-green-500' : 'bg-gray-400'}`}></span>
                 Standalone Mode: {debugInfo.standalone ? 'Yes' : 'No'}
               </li>
-              <li className="flex items-center gap-2">
-                <span className={`w-4 h-4 rounded-full ${debugInfo.installPromptSupported ? 'bg-green-500' : 'bg-red-500'}`}></span>
-                Install Prompt Support: {debugInfo.installPromptSupported ? 'Supported' : 'Not Supported'}
-              </li>
             </ul>
           </div>
 
           <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow">
-            <h2 className="text-xl font-semibold mb-4">Manifest 信息</h2>
+            <h2 className="text-xl font-semibold mb-4">Manifest Information</h2>
             <pre className="bg-gray-100 dark:bg-gray-900 p-4 rounded overflow-auto">
               {JSON.stringify(debugInfo.manifest, null, 2)}
             </pre>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow">
-            <h2 className="text-xl font-semibold mb-4">Manual Installation Methods</h2>
-            <div className="space-y-2 text-gray-600 dark:text-gray-300">
-              <p><strong>iOS Safari:</strong></p>
-              <ol className="list-decimal list-inside ml-4">
-                <li>Tap the share button (square with up arrow)</li>
-                <li>Select &ldquo;Add to Home Screen&rdquo;</li>
-                <li>Tap &ldquo;Add&rdquo;</li>
-              </ol>
-              
-              <p className="mt-4"><strong>Android Chrome/Edge:</strong></p>
-              <ol className="list-decimal list-inside ml-4">
-                <li>Tap the menu (three dots)</li>
-                <li>Select &ldquo;Add to Home Screen&rdquo; or &ldquo;Install App&rdquo;</li>
-                <li>Tap &ldquo;Add&rdquo; or &ldquo;Install&rdquo;</li>
-              </ol>
-            </div>
           </div>
         </div>
       </div>

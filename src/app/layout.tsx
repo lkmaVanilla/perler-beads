@@ -17,19 +17,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Perler Beads Generator | Perler Studio",
   description: "Upload images, adjust precision, generate pixel art patterns with one click. A simple and practical pixel art generation tool",
-  manifest: "/manifest.json",
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "default",
-    title: "Perler Beads Generator",
-  },
   icons: {
     icon: [
       { url: "/icon-192x192.png", sizes: "192x192", type: "image/png" },
       { url: "/icon-512x512.png", sizes: "512x512", type: "image/png" },
-    ],
-    apple: [
-      { url: "/icon-192x192.png", sizes: "192x192", type: "image/png" },
     ],
   },
 };
