@@ -171,10 +171,10 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
         }}
       >
         <div className="text-4xl font-bold text-yellow-400 drop-shadow-lg animate-pulse">
-          🎉完成🎉
+          🎉 Complete 🎉
         </div>
         <div className="text-lg text-white drop-shadow-md mt-2">
-          这个颜色拼完了！
+          This color is finished!
         </div>
       </div>
     </div>

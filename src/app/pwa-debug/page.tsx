@@ -84,15 +84,15 @@ export default function PWADebug() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">PWA 调试信息</h1>
+        <h1 className="text-3xl font-bold mb-8">PWA Debug Information</h1>
         
         <div className="space-y-6">
           <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow">
-            <h2 className="text-xl font-semibold mb-4">基本检查</h2>
+            <h2 className="text-xl font-semibold mb-4">Basic Checks</h2>
             <ul className="space-y-2">
               <li className="flex items-center gap-2">
                 <span className={`w-4 h-4 rounded-full ${debugInfo.https ? 'bg-green-500' : 'bg-red-500'}`}></span>
-                HTTPS: {debugInfo.https ? '是' : '否'} ({typeof window !== 'undefined' ? window.location.protocol : 'N/A'})
+                HTTPS: {debugInfo.https ? 'Yes' : 'No'} ({typeof window !== 'undefined' ? window.location.protocol : 'N/A'})
               </li>
               <li className="flex items-center gap-2">
                 <span className={`w-4 h-4 rounded-full ${debugInfo.serviceWorker ? 'bg-green-500' : 'bg-red-500'}`}></span>
@@ -100,11 +100,11 @@ export default function PWADebug() {
               </li>
               <li className="flex items-center gap-2">
                 <span className={`w-4 h-4 rounded-full ${debugInfo.standalone ? 'bg-green-500' : 'bg-gray-400'}`}></span>
-                独立模式: {debugInfo.standalone ? '是' : '否'}
+                Standalone Mode: {debugInfo.standalone ? 'Yes' : 'No'}
               </li>
               <li className="flex items-center gap-2">
                 <span className={`w-4 h-4 rounded-full ${debugInfo.installPromptSupported ? 'bg-green-500' : 'bg-red-500'}`}></span>
-                安装提示支持: {debugInfo.installPromptSupported ? '支持' : '不支持'}
+                Install Prompt Support: {debugInfo.installPromptSupported ? 'Supported' : 'Not Supported'}
               </li>
             </ul>
           </div>
@@ -117,20 +117,20 @@ export default function PWADebug() {
           </div>
 
           <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow">
-            <h2 className="text-xl font-semibold mb-4">手动安装方法</h2>
+            <h2 className="text-xl font-semibold mb-4">Manual Installation Methods</h2>
             <div className="space-y-2 text-gray-600 dark:text-gray-300">
               <p><strong>iOS Safari:</strong></p>
               <ol className="list-decimal list-inside ml-4">
-                <li>点击分享按钮（方框带向上箭头）</li>
-                <li>选择&ldquo;添加到主屏幕&rdquo;</li>
-                <li>点击&ldquo;添加&rdquo;</li>
+                <li>Tap the share button (square with up arrow)</li>
+                <li>Select &ldquo;Add to Home Screen&rdquo;</li>
+                <li>Tap &ldquo;Add&rdquo;</li>
               </ol>
               
               <p className="mt-4"><strong>Android Chrome/Edge:</strong></p>
               <ol className="list-decimal list-inside ml-4">
-                <li>点击菜单（三个点）</li>
-                <li>选择&ldquo;添加到主屏幕&rdquo;或&ldquo;安装应用&rdquo;</li>
-                <li>点击&ldquo;添加&rdquo;或&ldquo;安装&rdquo;</li>
+                <li>Tap the menu (three dots)</li>
+                <li>Select &ldquo;Add to Home Screen&rdquo; or &ldquo;Install App&rdquo;</li>
+                <li>Tap &ldquo;Add&rdquo; or &ldquo;Install&rdquo;</li>
               </ol>
             </div>
           </div>

@@ -453,7 +453,7 @@ export default function Home() {
         setExcludedColorKeys(new Set()); // ++ 重置排除列表 ++
         processFile(file);
       } else {
-        alert(`不支持的文件类型: ${file.type || '未知'}。请选择 JPG、PNG 格式的图片文件，或 CSV 数据文件。\n文件名: ${file.name}`);
+        alert(`Unsupported file type: ${file.type || 'unknown'}. Please select a JPG or PNG image file, or a CSV data file.\nFile name: ${file.name}`);
         console.warn(`Unsupported file type: ${file.type}, file name: ${file.name}`);
       }
     }
@@ -487,13 +487,13 @@ export default function Home() {
           setExcludedColorKeys(new Set()); // ++ 重置排除列表 ++
           processFile(file);
         } else {
-          alert(`不支持的文件类型: ${file.type || '未知'}。请拖放 JPG、PNG 格式的图片文件，或 CSV 数据文件。\n文件名: ${file.name}`);
+          alert(`Unsupported file type: ${file.type || 'unknown'}. Please drag and drop a JPG or PNG image file, or a CSV data file.\nFile name: ${file.name}`);
           console.warn(`Unsupported file type: ${file.type}, file name: ${file.name}`);
         }
       }
     } catch (error) {
       console.error("处理拖拽文件时发生错误:", error);
-      alert("处理文件时发生错误，请重试。");
+      alert("An error occurred while processing the file. Please try again.");
     }
   };
 
@@ -593,11 +593,11 @@ export default function Home() {
           setGranularity(gridDimensions.N);
           setGranularityInput(gridDimensions.N.toString());
           
-          alert(`成功导入CSV文件！图纸尺寸：${gridDimensions.N}x${gridDimensions.M}，共使用${Object.keys(colorCountsMap).length}种颜色。`);
+          alert(`CSV file imported successfully! Pattern size: ${gridDimensions.N}x${gridDimensions.M}, using ${Object.keys(colorCountsMap).length} colors.`);
         })
         .catch(error => {
           console.error('CSV导入失败:', error);
-          alert(`CSV导入失败：${error.message}`);
+          alert(`CSV import failed: ${error.message}`);
         });
     } else {
       // 处理图片文件
@@ -618,7 +618,7 @@ export default function Home() {
       };
       reader.onerror = () => {
           console.error("文件读取失败");
-          alert("无法读取文件。");
+          alert("Unable to read file.");
           setInitialGridColorKeys(new Set()); // ++ 重置初始键 ++
       }
       reader.readAsDataURL(file);
@@ -740,7 +740,7 @@ export default function Home() {
 
     if (currentPalette.length === 0) {
         console.error("Cannot pixelate: The selected color palette is empty (likely due to exclusions).");
-        alert("错误：当前可用颜色板为空（可能所有颜色都被排除了），无法处理图像。请尝试恢复部分颜色。");
+        alert("Error: The available color palette is empty (possibly all colors have been excluded). Cannot process image. Please try restoring some colors.");
         // Clear previous results visually
         pixelatedCtx.clearRect(0, 0, pixelatedCanvas.width, pixelatedCanvas.height);
         setMappedPixelData(null);
@@ -759,7 +759,7 @@ export default function Home() {
     
     img.onerror = (error: Event | string) => {
       console.error("Image loading failed:", error); 
-      alert("无法加载图片。");
+      alert("Unable to load image.");
       setOriginalImageSrc(null); 
       setMappedPixelData(null); 
       setGridDimensions(null); 
@@ -982,7 +982,7 @@ export default function Home() {
             pixelatedCtx.fillStyle = '#6b7280'; // gray-500
             pixelatedCtx.font = '16px sans-serif';
             pixelatedCtx.textAlign = 'center';
-            pixelatedCtx.fillText('无可用颜色，请恢复部分排除的颜色', pixelatedCanvas.width / 2, pixelatedCanvas.height / 2);
+            pixelatedCtx.fillText('No available colors, please restore some excluded colors', pixelatedCanvas.width / 2, pixelatedCanvas.height / 2);
         }
         setMappedPixelData(null);
         setGridDimensions(null);
@@ -1080,7 +1080,7 @@ export default function Home() {
             // --- 确保初始颜色键已记录 ---
             if (initialGridColorKeys.size === 0) {
                 console.error("Cannot exclude color: Initial grid color keys not yet calculated.");
-                alert("无法排除颜色，初始颜色数据尚未准备好，请稍候。");
+                alert("Cannot exclude color: Initial color data is not ready yet. Please wait.");
                 return;
             }
             console.log("Initial Grid Hex Keys:", Array.from(initialGridColorKeys));
@@ -1112,7 +1112,7 @@ export default function Home() {
             // 5. *** 关键检查 ***：如果在考虑所有排除项后，没有*初始*颜色可供映射，则阻止此次排除
             if (remapTargetPalette.length === 0) {
                 console.warn(`Cannot exclude color '${hexKey}'. No other valid colors from the initial grid remain after considering all current exclusions.`);
-                alert(`无法排除颜色 ${hexKey}，因为图中最初存在的其他可用颜色也已被排除。请先恢复部分其他颜色。`);
+                alert(`Cannot exclude color ${hexKey} because other available colors that were initially in the image have also been excluded. Please restore some other colors first.`);
                 console.log("---------");
                 return; // 停止排除过程
             }
@@ -1123,7 +1123,7 @@ export default function Home() {
             // 检查排除颜色的数据是否存在
              if (!excludedColorData || !mappedPixelData || !gridDimensions) {
                  console.error("Cannot exclude color: Missing data for remapping.");
-                 alert("无法排除颜色，缺少必要数据。");
+                 alert("Cannot exclude color: Missing required data.");
                 console.log("---------");
                  return;
              }
@@ -1203,7 +1203,7 @@ export default function Home() {
   // 一键去背景：识别边缘主色并洪水填充去除
   const handleAutoRemoveBackground = () => {
     if (!mappedPixelData || !gridDimensions) {
-      alert('请先生成图纸后再使用一键去背景。');
+      alert('Please generate the pattern first before using auto remove background.');
       return;
     }
 
@@ -1226,7 +1226,7 @@ export default function Home() {
     }
 
     if (borderCounts.size === 0) {
-      alert('边缘没有可识别的背景颜色。');
+      alert('No recognizable background color found at the edges.');
       return;
     }
 
@@ -1263,7 +1263,7 @@ export default function Home() {
     }
 
     if (stack.length === 0) {
-      alert('未找到可去除的背景区域。');
+      alert('No removable background area found.');
       return;
     }
 
@@ -1590,7 +1590,7 @@ export default function Home() {
       .map(([hexValue]) => hexValue);
 
     if (selectedHexValues.length === 0) {
-      alert("当前没有选中的颜色，无法导出。");
+      alert("No colors are currently selected. Cannot export.");
       return;
     }
 
@@ -1648,11 +1648,11 @@ export default function Home() {
 
         if (invalidHexValues.length > 0) {
           console.warn("导入时发现无效的hex值:", invalidHexValues);
-          alert(`导入完成，但以下颜色无效已被忽略：\n${invalidHexValues.join(', ')}`);
+          alert(`Import completed, but the following invalid colors were ignored:\n${invalidHexValues.join(', ')}`);
         }
 
         if (validHexValues.length === 0) {
-          alert("导入的文件中不包含任何有效的颜色。");
+          alert("The imported file does not contain any valid colors.");
           return;
         }
 
@@ -1663,11 +1663,11 @@ export default function Home() {
         const newSelections = presetToSelections(allHexValues, validHexValues);
         setCustomPaletteSelections(newSelections);
         setIsCustomPalette(true); // 标记为自定义
-        alert(`成功导入 ${validHexValues.length} 个颜色！`);
+        alert(`Successfully imported ${validHexValues.length} colors!`);
 
       } catch (error) {
         console.error("导入色板配置失败:", error);
-        alert(`导入失败: ${error instanceof Error ? error.message : '未知错误'}`);
+        alert(`Import failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
       } finally {
         // 重置文件输入，以便可以再次导入相同的文件
         if (event.target) {
@@ -1676,7 +1676,7 @@ export default function Home() {
       }
     };
     reader.onerror = () => {
-      alert("读取文件失败。");
+      alert("Failed to read file.");
        // 重置文件输入
       if (event.target) {
         event.target.value = '';
@@ -1964,10 +1964,10 @@ export default function Home() {
 
             {/* Ultra fancy brand name and tool name with hyper cute decorations */}
             <div className="relative flex flex-col items-center space-y-3">
-              {/* Brand name - 七卡瓦 with ultra fancy effects */}
+              {/* Brand name - Perler Studio with ultra fancy effects */}
               <div className="relative">
                 <h1 className="relative text-4xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 via-blue-500 to-cyan-400 tracking-wider drop-shadow-2xl transform hover:scale-105 transition-transform duration-300 animate-bounce">
-                  七卡瓦
+                  Perler Studio
                 </h1>
                 
                 {/* Super fancy geometric decorations */}
@@ -1987,10 +1987,10 @@ export default function Home() {
                 <div className="absolute bottom-1 right-0 w-1 h-1 bg-purple-300 rounded-full animate-pulse delay-1000"></div>
               </div>
               
-              {/* Tool name - 拼豆底稿生成器 with hyper cute style */}
+              {/* Tool name - Perler Beads Generator with hyper cute style */}
               <div className="relative">
                 <h2 className="relative text-xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-teal-500 via-green-500 to-emerald-400 tracking-widest transform hover:scale-102 transition-all duration-300">
-                  拼豆底稿生成器
+                  Perler Beads Generator
                 </h2>
                 
                 {/* Super cute geometric shapes */}
@@ -2041,70 +2041,9 @@ export default function Home() {
           <div className="h-1 w-24 mx-auto my-3 bg-gradient-to-r from-blue-500 to-pink-500 rounded-full"></div>
                     {/* Slogan with clean typography */}
           <p className="mt-4 text-base sm:text-lg font-light text-gray-600 dark:text-gray-300 max-w-lg mx-auto text-center tracking-[0.1em] leading-relaxed">
-            让像素创意属于每一个人
+            Making pixel creativity accessible to everyone
           </p>
 
-          <div className="mt-5 flex items-center justify-center">
-            <a
-              href="https://perlerbeadsnew.zippland.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-blue-200 dark:border-blue-700 bg-white/90 dark:bg-gray-800/90 px-4 py-2 text-sm font-semibold text-blue-600 dark:text-blue-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
-            >
-              <span>新版工作台</span>
-              <span className="text-[10px] uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-blue-600 text-white">
-                beta
-              </span>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-                <path fillRule="evenodd" d="M3 10a1 1 0 011-1h9.586L11.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 01-1-1z" clipRule="evenodd" />
-              </svg>
-            </a>
-          </div>
-          
-          {/* 添加小红书交流群链接 */}
-          <div className="mt-6 flex flex-col items-center justify-center space-y-2">
-            <p className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-amber-200 dark:border-amber-700 bg-amber-50 dark:bg-amber-900/20 text-xs text-gray-600 dark:text-gray-200 font-semibold">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5 text-amber-500 dark:text-amber-300">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-11.707a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414l-3-3z" clipRule="evenodd" />
-              </svg>
-              发布平台请标注来源或保留图片水印及标识
-            </p>
-            <div className="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-300">
-              <span>欢迎到</span>
-              <a href="https://www.xiaohongshu.com/user/profile/623e8b080000000010007721" target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-rose-500 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 transition-colors duration-200 hover:underline font-medium">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 1024 1024" fill="currentColor" className="mr-0.5">
-                  <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64z m238.8 360.2l-57.7 93.3c-10.1 16.3-31.5 21.3-47.8 11.2l-112.4-69.5c-16.3-10.1-21.3-31.5-11.2-47.8l57.7-93.3c10.1-16.3 31.5-21.3 47.8-11.2l112.4 69.5c16.3 10.1 21.3 31.5 11.2 47.8zM448 496l-57.7 93.3c-10.1 16.3-31.5 21.3-47.8 11.2l-112.4-69.5c-16.3-10.1-21.3-31.5-11.2-47.8l57.7-93.3c10.1-16.3 31.5-21.3 47.8-11.2l112.4 69.5c16.3 10.1 21.3 31.5 11.2 47.8z m248.9 43.2l-57.7 93.3c-10.1 16.3-31.5 21.3-47.8 11.2l-112.4-69.5c-16.3-10.1-21.3-31.5-11.2-47.8l57.7-93.3c10.1-16.3 31.5-21.3 47.8-11.2l112.4 69.5c16.3 10.1 21.3 31.5 11.2 47.8z"/>
-                </svg>
-                小红书
-              </a>
-              <span>提建议和围观微信小程序开发进度</span>
-            </div>
-            <div className="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-300">
-              <span>也欢迎到</span>
-              <a
-                href="https://github.com/Zippland/perler-beads"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-200 hover:underline font-medium"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="mr-0.5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M12 0C5.37 0 0 5.48 0 12.25c0 5.42 3.44 10.01 8.2 11.63.6.12.82-.27.82-.6 0-.3-.01-1.08-.02-2.13-3.34.74-4.04-1.65-4.04-1.65-.55-1.44-1.35-1.83-1.35-1.83-1.1-.78.08-.77.08-.77 1.21.09 1.85 1.26 1.85 1.26 1.08 1.9 2.83 1.35 3.52 1.03.11-.81.42-1.35.77-1.66-2.66-.31-5.46-1.36-5.46-6.06 0-1.34.46-2.43 1.22-3.29-.12-.31-.53-1.55.12-3.23 0 0 1-.33 3.29 1.25a10.96 10.96 0 0 1 5.98 0c2.29-1.58 3.29-1.25 3.29-1.25.65 1.68.24 2.92.12 3.23.76.86 1.22 1.95 1.22 3.29 0 4.71-2.81 5.74-5.49 6.05.43.38.81 1.13.81 2.28 0 1.65-.02 2.98-.02 3.39 0 .33.22.72.83.59C20.56 22.25 24 17.67 24 12.25 24 5.48 18.63 0 12 0Z"
-                  />
-                </svg>
-                GitHub
-              </a>
-              <span>给项目点个🌟 支持一下</span>
-            </div>
-          </div>
         </div>
       </header>
 
@@ -2122,9 +2061,9 @@ export default function Home() {
              <path strokeLinecap="round" strokeLinejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
           </svg>
           {/* Text color */}
-          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">拖放图片到此处，或<span className="font-medium text-blue-600 dark:text-blue-400">点击选择文件</span></p>
+          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Drag and drop an image here, or <span className="font-medium text-blue-600 dark:text-blue-400">click to select a file</span></p>
           {/* Text color */}
-                          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">支持 JPG, PNG 图片格式，或 CSV 数据文件</p>
+                          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">Supports JPG, PNG image formats, or CSV data files</p>
         </div>
 
         {/* Apply dark mode styles to the Tip Box */}
@@ -2136,7 +2075,7 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               {/* Text color */}
-              <span className="text-indigo-700 dark:text-indigo-300">小贴士：使用像素图进行转换前，请确保图片的边缘吻合像素格子的边界线，这样可以获得更精确的切割效果和更好的成品。</span>
+              <span className="text-indigo-700 dark:text-indigo-300">Tip: Before converting a pixel image, make sure the image edges align with the pixel grid boundaries for more precise cutting and better results.</span>
             </p>
           </div>
         )}
@@ -2154,7 +2093,7 @@ export default function Home() {
                 <div className="flex-1">
                   {/* Label color */}
                   <label htmlFor="granularityInput" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 sm:mb-2">
-                    横轴切割数量 (10-300):
+                    Horizontal Grid Count (10-300):
                   </label>
                   <div className="flex items-center gap-2">
                     {/* Input field styles */}
@@ -2174,7 +2113,7 @@ export default function Home() {
                 <div className="flex-1">
                     {/* Label color */}
                     <label htmlFor="similarityThresholdInput" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 sm:mb-2">
-                        颜色合并阈值 (0-100):
+                        Color Merge Threshold (0-100):
                     </label>
                     <div className="flex items-center gap-2">
                       {/* Input field styles */}
@@ -2196,21 +2135,21 @@ export default function Home() {
                     onClick={handleConfirmParameters}
                     className="h-9 bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 rounded-md whitespace-nowrap transition-colors duration-200 shadow-sm"
                   >
-                    应用数字
+                    Apply
                   </button>
                   <button
                     onClick={handleAutoRemoveBackground}
                     disabled={!mappedPixelData || !gridDimensions}
                     className="inline-flex items-center justify-center h-9 px-3 text-sm rounded-md border border-blue-200 dark:border-blue-700 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-200 hover:bg-blue-100 dark:hover:bg-blue-800/40 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
                   >
-                    一键去背景
+                    Auto Remove Background
                   </button>
                 </div>
 
                 {/* Pixelation Mode Selector */}
                 <div className="sm:col-span-2">
                   {/* Label color */}
-                  <label htmlFor="pixelationModeSelect" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 sm:mb-2">处理模式:</label>
+                  <label htmlFor="pixelationModeSelect" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 sm:mb-2">Processing Mode:</label>
                   <div className="flex items-center gap-2">
                     {/* Select field styles */}
                     <select
@@ -2219,15 +2158,15 @@ export default function Home() {
                       onChange={handlePixelationModeChange}
                       className="w-full p-1.5 border border-gray-300 dark:border-gray-600 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500 h-9 shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200"
                     >
-                      <option value={PixelationMode.Dominant} className="bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200">卡通 (主色)</option>
-                      <option value={PixelationMode.Average} className="bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200">真实 (平均)</option>
+                      <option value={PixelationMode.Dominant} className="bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200">Cartoon (Dominant)</option>
+                      <option value={PixelationMode.Average} className="bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200">Realistic (Average)</option>
                     </select>
                   </div>
                 </div>
 
                 {/* 色号系统选择器 */}
                 <div className="sm:col-span-2">
-                  <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 sm:mb-2">色号系统:</label>
+                  <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 sm:mb-2">Color System:</label>
                   <div className="flex flex-wrap gap-2">
                     {colorSystemOptions.map(option => (
                       <button
@@ -2254,10 +2193,10 @@ export default function Home() {
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z" clipRule="evenodd" />
                     </svg>
-                    管理色板 ({Object.values(customPaletteSelections).filter(Boolean).length} 色)
+                    Manage Palette ({Object.values(customPaletteSelections).filter(Boolean).length} colors)
                   </button>
                   {isCustomPalette && (
-                    <p className="text-xs text-center text-blue-500 dark:text-blue-400 mt-1.5">当前使用自定义色板</p>
+                    <p className="text-xs text-center text-blue-500 dark:text-blue-400 mt-1.5">Using custom palette</p>
                   )}
                 </div>
               </div>
@@ -2304,14 +2243,14 @@ export default function Home() {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-blue-500 dark:text-blue-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                         </svg>
-                        <span>使用右上角菜单操作</span>
+                        <span>Use the menu in the top right corner</span>
                       </div>
                       <span className="hidden sm:inline text-gray-300 dark:text-gray-500">|</span>
                       <div className="flex items-center gap-1 w-full sm:w-auto">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-blue-500 dark:text-blue-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
-                        <span>推荐电脑操作，上色更精准</span>
+                        <span>Recommended for desktop, more precise coloring</span>
                       </div>
                     </div>
                   </div>
@@ -2328,7 +2267,7 @@ export default function Home() {
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-blue-500 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <span>高精度网格 ({gridDimensions.N}×{gridDimensions.M}) - 画布已自动放大，可左右滚动、放大查看精细图像</span>
+                      <span>High-precision grid ({gridDimensions.N}×{gridDimensions.M}) - Canvas auto-zoomed, scroll horizontally or zoom to view details</span>
                     </div>
                   </div>
                 )}
@@ -2357,10 +2296,10 @@ export default function Home() {
           <div className="w-full md:max-w-2xl mt-6 bg-white dark:bg-gray-800 p-4 rounded-lg shadow border border-gray-100 dark:border-gray-700 color-stats-panel">
             {/* Title color */}
             <h3 className="text-lg font-semibold mb-1 text-gray-700 dark:text-gray-200 text-center">
-              去除杂色 
+              Remove Colors
             </h3>
             {/* Subtitle color */}
-            <p className="text-xs text-center text-gray-500 dark:text-gray-400 mb-3">点击下方列表中的颜色可将其从可用列表中排除。总计: {totalBeadCount} 颗</p>
+            <p className="text-xs text-center text-gray-500 dark:text-gray-400 mb-3">Click colors in the list below to exclude them from the available palette. Total: {totalBeadCount} beads</p>
             <ul className="space-y-1 max-h-60 overflow-y-auto pr-2 text-sm">
               {Object.keys(colorCounts)
                 .sort(sortColorKeys)
@@ -2381,7 +2320,7 @@ export default function Home() {
                           ? 'bg-red-100 dark:bg-red-900/50 hover:bg-red-200 dark:hover:bg-red-800/60 opacity-60 dark:opacity-70' // Darker red background for excluded
                           : 'hover:bg-gray-100 dark:hover:bg-gray-700'
                       }`}
-                      title={isExcluded ? `点击恢复 ${displayColorKey}` : `点击排除 ${displayColorKey}`}
+                      title={isExcluded ? `Click to restore ${displayColorKey}` : `Click to exclude ${displayColorKey}`}
                     >
                       <div className={`flex items-center space-x-2 ${isExcluded ? 'line-through' : ''}`}>
                         {/* Adjust color swatch border */}
@@ -2393,7 +2332,7 @@ export default function Home() {
                         <span className={`font-mono font-medium ${isExcluded ? 'text-red-700 dark:text-red-400' : 'text-gray-800 dark:text-gray-200'}`}>{displayColorKey}</span>
                       </div>
                       {/* Adjust text color for count (normal and excluded) */}
-                      <span className={`text-xs ${isExcluded ? 'text-red-600 dark:text-red-400 line-through' : 'text-gray-600 dark:text-gray-300'}`}>{count} 颗</span>
+                      <span className={`text-xs ${isExcluded ? 'text-red-600 dark:text-red-400 line-through' : 'text-gray-600 dark:text-gray-300'}`}>{count} beads</span>
                     </li>
                   );
                 })}
@@ -2404,7 +2343,7 @@ export default function Home() {
                     onClick={() => setShowExcludedColors(prev => !prev)}
                     className="w-full text-xs py-1.5 px-2 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors flex items-center justify-between"
                   >
-                    <span>已排除的颜色 ({excludedColorKeys.size})</span>
+                    <span>Excluded Colors ({excludedColorKeys.size})</span>
                     <svg 
                       xmlns="http://www.w3.org/2000/svg" 
                       className={`h-4 w-4 text-gray-500 dark:text-gray-400 transform transition-transform ${showExcludedColors ? 'rotate-180' : ''}`}
@@ -2445,7 +2384,7 @@ export default function Home() {
                                     }}
                                     className="text-xs py-0.5 px-2 bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 rounded hover:bg-blue-200 dark:hover:bg-blue-800/40"
                                   >
-                                    恢复
+                                    Restore
                                   </button>
                                 </li>
                               );
@@ -2453,7 +2392,7 @@ export default function Home() {
                           </ul>
                         ) : (
                           <p className="text-xs text-center text-gray-500 dark:text-gray-400 py-2">
-                            没有排除的颜色
+                            No excluded colors
                           </p>
                         )}
                       </div>
@@ -2469,7 +2408,7 @@ export default function Home() {
                         }}
                         className="mt-2 w-full text-xs py-1 px-2 bg-blue-500 hover:bg-blue-600 text-white rounded transition-colors"
                       >
-                        一键恢复所有颜色
+                        Restore All Colors
                       </button>
                     </div>
                   )}
@@ -2482,7 +2421,7 @@ export default function Home() {
          {!isManualColoringMode && originalImageSrc && activeBeadPalette.length === 0 && excludedColorKeys.size > 0 && (
              // Apply dark mode styles to the warning box
              <div className="w-full md:max-w-2xl mt-6 bg-yellow-100 dark:bg-yellow-900/50 p-4 rounded-lg shadow border border-yellow-200 dark:border-yellow-800/60 text-center text-sm text-yellow-800 dark:text-yellow-300">
-                 当前可用颜色过少或为空。请在上方统计列表中查看已排除的颜色并恢复部分，或更换色板。
+                 Available colors are too few or empty. Please check the excluded colors in the statistics list above and restore some, or change the palette.
                  {excludedColorKeys.size > 0 && (
                       // Apply dark mode styles to the inline "restore all" button
                       <button
@@ -2498,7 +2437,7 @@ export default function Home() {
                           }}
                           className="mt-2 ml-2 text-xs py-1 px-2 bg-yellow-200 dark:bg-yellow-700/60 text-yellow-900 dark:text-yellow-200 rounded hover:bg-yellow-300 dark:hover:bg-yellow-600/70 transition-colors"
                       >
-                          查看已排除颜色 ({excludedColorKeys.size})
+                          View Excluded Colors ({excludedColorKeys.size})
                       </button>
                   )}
              </div>
@@ -2517,7 +2456,7 @@ export default function Home() {
                 className={`w-full py-2.5 px-4 text-sm sm:text-base rounded-lg transition-all duration-300 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-md hover:shadow-lg hover:translate-y-[-1px]`}
               >
                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"> <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /> </svg>
-                 进入手动编辑模式
+                 Enter Manual Edit Mode
              </button>
 
              {/* Focus Mode Button */}
@@ -2529,7 +2468,7 @@ export default function Home() {
                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                  </svg>
-                 进入专心拼豆模式（AplhaTest）
+                 Enter Focus Mode (Alpha Test)
              </button>
             </div>
         )} {/* ++ End of RENDER Enter Manual Mode Button ++ */}
@@ -2544,7 +2483,7 @@ export default function Home() {
                 className="w-full py-2.5 px-4 bg-gradient-to-r from-green-500 to-green-600 text-white text-sm sm:text-base rounded-lg hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg hover:translate-y-[-1px] disabled:hover:translate-y-0 disabled:hover:shadow-md"
                >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                下载拼豆图纸
+                Download Perler Beads Pattern
               </button>
             </div>
         )} {/* ++ End of HIDE Download Buttons ++ */}
@@ -2633,34 +2572,16 @@ export default function Home() {
 
       {/* Apply dark mode styles to the Footer */}
       <footer className="w-full md:max-w-4xl mt-10 mb-6 py-6 text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800/50 rounded-lg shadow-inner">
-
-        {/* Donation button styles are likely fine */}
-        <button
-          onClick={() => setIsDonationModalOpen(true)}
-          className="mb-5 px-6 py-2.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:translate-y-[-2px] flex items-center justify-center mx-auto"
-        >
-          {/* SVG and Text inside button */}
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M18 8h1a2 2 0 0 1 2 2v1c0 1.1-.9 2-2 2h-1" fill="#f9a8d4" />
-            <path d="M6 8h12v9a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V8z" fill="#f9a8d4" />
-            <path d="M6 8V7a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v1" fill="#f472b6" />
-            <path d="M12 16v-4" stroke="#7d2a5a" />
-            <path d="M9.5 14.5L9 16" stroke="#7d2a5a" />
-            <path d="M14.5 14.5L15 16" stroke="#7d2a5a" />
-          </svg>
-          <span>请作者喝一杯奶茶</span>
-        </button>
-
         {/* Copyright text color */}
         <p className="font-medium text-gray-600 dark:text-gray-300">
-          七卡瓦 拼豆底稿生成器 &copy; {new Date().getFullYear()}
+          Perler Beads Generator &copy; {new Date().getFullYear()}
         </p>
       </footer>
 
-      {/* Donation Modal - 现在使用新的组件 */}
+      {/* Donation Modal - Now using the new component */}
       <DonationModal isOpen={isDonationModalOpen} onClose={() => setIsDonationModalOpen(false)} />
 
-      {/* 使用导入的下载设置弹窗组件 */}
+      {/* Download settings modal component */}
       <DownloadSettingsModal 
         isOpen={isDownloadSettingsOpen}
         onClose={() => setIsDownloadSettingsOpen(false)}
@@ -2669,7 +2590,7 @@ export default function Home() {
         onDownload={handleDownloadRequest}
       />
 
-      {/* 专心拼豆模式进入前下载提醒弹窗 */}
+      {/* Focus mode pre-download reminder modal */}
       <FocusModePreDownloadModal
         isOpen={isFocusModePreDownloadModalOpen}
         onClose={() => setIsFocusModePreDownloadModalOpen(false)}

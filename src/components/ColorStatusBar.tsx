@@ -19,7 +19,7 @@ const ColorStatusBar: React.FC<ColorStatusBarProps> = ({
   if (!colorInfo) {
     return (
       <div className="h-12 bg-white border-b border-gray-200 px-4 py-2 flex items-center">
-        <div className="text-gray-500">请选择颜色</div>
+        <div className="text-gray-500">Please select a color</div>
       </div>
     );
   }
@@ -41,7 +41,7 @@ const ColorStatusBar: React.FC<ColorStatusBarProps> = ({
             {colorInfo.completed}/{colorInfo.total}
           </div>
           <div className="text-xs text-gray-500">
-            预计还需 {estimatedTime}分钟
+            Estimated {estimatedTime} min remaining
           </div>
         </div>
       </div>

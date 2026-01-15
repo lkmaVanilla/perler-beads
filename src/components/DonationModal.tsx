@@ -38,23 +38,23 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
           </div>
           <div className="text-center">
             <p className="mb-3 text-sm sm:text-base text-gray-600 dark:text-gray-300 break-words">
-              开源项目是把作者和用户紧紧联系在一起的社群，如果您希望这个项目继续发展，可以请作者喝一杯奶茶。
+              Open source projects connect authors and users in a community. If you'd like this project to continue growing, you can buy the author a milk tea.
             </p>
             <p className="mb-4 sm:mb-6 text-sm sm:text-base text-gray-600 dark:text-gray-300 break-words">
-              您的支持是作者把项目继续下去的动力。
+              Your support is the motivation for the author to continue the project.
             </p>
             <div className="flex justify-center mb-4 sm:mb-5">
               <div className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 p-1 sm:p-2 bg-gradient-to-r from-pink-100 to-rose-100 dark:from-pink-900/30 dark:to-rose-900/30 rounded-lg shadow-md">
                 <Image
                   src="/donation-qr.jpg"
-                  alt="赞赏码"
+                  alt="Donation QR Code"
                   fill
                   className="object-contain p-1 sm:p-2"
                 />
               </div>
             </div>
             <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 py-1.5 px-3 sm:py-2 sm:px-4 rounded-full inline-block shadow-sm">
-              微信扫描上方赞赏码，请作者喝一杯奶茶。
+              Scan the QR code above with WeChat to buy the author a milk tea.
             </p>
           </div>
         </div>

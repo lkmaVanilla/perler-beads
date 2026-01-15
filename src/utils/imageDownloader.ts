@@ -58,7 +58,7 @@ export function exportCsvData({
 }): void {
   if (!mappedPixelData || !gridDimensions) {
     console.error("导出失败: 映射数据或尺寸无效。");
-    alert("无法导出CSV，数据未生成或无效。");
+    alert("Cannot export CSV: data not generated or invalid.");
     return;
   }
 
@@ -220,12 +220,12 @@ export async function downloadImage({
 }): Promise<void> {
   if (!mappedPixelData || !gridDimensions || gridDimensions.N === 0 || gridDimensions.M === 0 || activeBeadPalette.length === 0) {
     console.error("下载失败: 映射数据或尺寸无效。");
-    alert("无法下载图纸，数据未生成或无效。");
+    alert("Cannot download pattern: data not generated or invalid.");
     return;
   }
   if (!colorCounts) {
     console.error("下载失败: 色号统计数据无效。");
-    alert("无法下载图纸，色号统计数据未生成或无效。");
+    alert("Cannot download pattern: color statistics not generated or invalid.");
     return;
   }
   
@@ -330,7 +330,7 @@ export async function downloadImage({
     const context = downloadCanvas.getContext('2d');
     if (!context) {
       console.error("下载失败: 无法创建临时 Canvas Context。");
-      alert("无法下载图纸。");
+      alert("Cannot download pattern.");
       return;
     }
     
@@ -835,7 +835,7 @@ export async function downloadImage({
       }
     } catch (e) {
       console.error("下载图纸失败:", e);
-      alert("无法生成图纸下载链接。");
+      alert("Cannot generate pattern download link.");
     }
   };
   

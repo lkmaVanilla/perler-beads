@@ -41,9 +41,9 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
       
       <div className="text-xs text-gray-500">
         {recommendedCell ? (
-          <span>下一块 → {recommendedCell.row + 1},{recommendedCell.col + 1}</span>
+          <span>Next → {recommendedCell.row + 1},{recommendedCell.col + 1}</span>
         ) : (
-          <span>已完成当前颜色</span>
+          <span>Current color completed</span>
         )}
       </div>
     </div>
